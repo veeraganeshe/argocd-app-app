@@ -1,0 +1,18 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: d4u-admin-api-dev.jnj.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+cdr:
+  env: dev
+  dredbhost: deltahive-dre-dqq-01.c1ykqwsimc9a.us-east-1.rds.amazonaws.com
+  KMSKEY: arn:aws:kms:us-east-1:730335304869:key/bf354df2-5420-4bab-8892-097736f906dc
+
+image:
+  tag: "1.0.0-dev-89"

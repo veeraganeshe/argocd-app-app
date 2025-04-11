@@ -1,0 +1,18 @@
+ingress:
+  enabled: true
+  className: "nginx"
+  annotations: {}
+  hosts:
+    - host: d4u-admin-api-preqa-test.jnj.com
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls: []
+
+cdr:
+  env: preqa-test
+  dredbhost: deltahive-dre-dsw-test.cj24ak48a1xk.us-east-1.rds.amazonaws.com
+  KMSKEY: arn:aws:kms:us-east-1:339713132219:key/68e0bc4d-09b6-4663-a324-3ac6fc418825
+
+image:
+  tag: "1.0.0-cdr-20"

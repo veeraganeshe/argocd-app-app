@@ -1,0 +1,74 @@
+installClusterAgent: true
+
+imageInfo:
+  agentImage: jnj-docker.artifactrepo.jnj.com/appdynamics/cluster-agent
+  operatorImage: jnj-docker.artifactrepo.jnj.com/appdynamics/cluster-agent-operator
+# controller info
+controllerInfo:
+  url: https://johnsonandjohnson-prod.saas.appdynamics.com:443
+  account: johnsonandjohnson-prod
+  username: d4u_cluster_user
+  password: d4u_cluster_user
+  accessKey: jo9ba1ktib9l
+
+# Cluster agent config
+clusterAgent:
+  appName: d4u-marvel-k8s-cluster-prod
+  nsToMonitorRegex: .*
+  imagePullSecret: creds-jnj-1
+  logProperties:
+    logLevel: DEBUG
+  memoryThresholdForRestart: 90
+
+agentPod:
+[O  labels:
+    application-id: APP000010041374 # App ID for Marvel on IRIS eg - APP000020007781
+
+operatorPod:
+  imagePullSecret: creds-jnj-1
+  labels:
+    application-id: APP000010041374 # App ID for Marvel on IRIS eg - APP000020007781
+
+# ...
+# Instrumentation config
+instrumentationConfig:
+  enabled: true
+  # required to enable auto-instrumentation
+  instrumentationMethod: Env
+  # default auto-instrumentation properties
+  # may be overridden in an instrumentationRule
+  nsToInstrumentRegex: ^marvel$
+  defaultAppName: D4U-Marvel-K8s-PROD
+#  numberOfTaskWorkers: 1
+  instrumentationRules:
+    - namespaceRegex: ^marvel$
+      matchString: web
+      tierName: frontend-web-node
+      language: nodejs
+      customAgentConfigSource:
+        - configMapName: custom-configmap
+      readOnlyRootFilesystem: true
+      imageInfo:
+        image: jnj-docker.artifactrepo.jnj.com/appdynamics/nodejs-agent:24.4.1-18-alma
+        agentMountPath: /opt/appdynamics
+        imagePullPolicy: Always
+      analyticsHost: analytics.api.appdynamics.com
+      analyticsPort: 443
+      analyticsSslEnabled: true
+    - namespaceRegex: ^marvel$
+      matchString: marvel-datareview-bff
+      tierName: marvel-datareview-bff-nodes
+      language: nodejs
+      customAgentConfigSource:
+        - configMapName: custom-configmap-info-logging
+      readOnlyRootFilesystem: true
+      imageInfo:
+        image: jnj-docker.artifactrepo.jnj.com/appdynamics/nodejs-agent:24.4.1-18-alpine
+        agentMountPath: /opt/appdynamics
+        imagePullPolicy: Always
+      analyticsHost: analytics.api.appdynamics.com
+      analyticsPort: 443
+      analyticsSslEnabled: true
+[I    - namespaceRegex: ^marvel$
+      matchString: marvel-user-bff|marvel-ref-bff|marvel-inquiry-bff|marvel-review-requirements-bff|marvel-tasks-bff|marvel-flags-bff|d4u-smart-compose-bff|marvel-studies-bff
+

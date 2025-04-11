@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: d4u-admin-api
+data:
+  dredbhost: "{{ .Values.cdr.dredbhost }}"
+  KMSKEY: "{{ .Values.cdr.KMSKEY }}"

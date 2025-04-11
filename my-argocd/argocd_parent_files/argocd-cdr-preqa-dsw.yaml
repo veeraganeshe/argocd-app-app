@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: dsw-app
+spec:
+  project: default
+  source:
+    path: argocd_preqa_cdr
+    repoURL: https://sourcecode.jnj.com/scm/asx-jadf/d4u-argo.git
+    targetRevision: release/cdr
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated:
+      selfHeal: true

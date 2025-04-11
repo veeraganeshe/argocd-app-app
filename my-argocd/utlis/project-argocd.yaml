@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: marvel
+  namespace: argocd
+spec:
+  sourceRepos:
+    - https://sourcecode.jnj.com/scm/asx-jadf/d4u-argo.git
+  destinations:
+    - namespace: 'argocd'
+      server: 'https://kubernetes.default.svc'
+    - namespace: 'marvel'
+      server: 'https://39236AB00F617DB990DB59EEA78ADE08.gr7.us-east-1.eks.amazonaws.com'
+  clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+  sourceWhitelist:
+    - repoURL: https://sourcecode.jnj.com/scm/asx-jadf/d4u-argo.git
+      targetRevision: '*'
+

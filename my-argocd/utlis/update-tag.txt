@@ -1,0 +1,19 @@
+✅ What both scripts have in common:
+Feature	Description
+Input	Both take a Docker registry token as the first argument.
+Default Variables	Both define TAG, ENVNAME, and (in the second script) VERSION.
+Target	Both update values.yaml files for multiple apps.
+Action	Fetch the latest appropriate Docker image tag and update it in the YAML file if needed.
+Registry Access	Both call the JNJ Docker registry using curl with authentication.
+❌ What’s different between the two scripts:
+Aspect	Script 1 (d4u apps)	Script 2 (marvel apps)
+App group	Targets D4U apps (e.g., d4u-admin-api)	Targets Marvel apps (e.g., marvel_user_api)
+Tag format used	Matches tags like dev:latest	Matches tags like 2.2.0-dev-xxx
+Filtering logic	Filters out tags containing exclude	Filters tags using a specific VERSION-TAG-NUMBER pattern
+Version handling	No VERSION var; uses TAG:latest directly	Has a VERSION var used in tag filtering
+App YAML path	Updates files like ../apps_cdr/...	Updates files like ../apps_marvel/...
+🧠 Summary:
+Script	Purpose
+Script 1	Update image tags for D4U apps using the latest tag (excluding some tags) like dev:latest. Simpler matching logic. update_tag.sh
+Script 2	Update image tags for Marvel apps using a versioned pattern like 2.2.0-dev-14, with more specific filtering by version + tag.
+

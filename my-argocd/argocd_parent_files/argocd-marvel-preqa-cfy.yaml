@@ -1,0 +1,13 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cfy-marvel-app
+spec:
+  project: default
+  source:
+    path: argocd_preqa_marvel
+    repoURL: https://sourcecode.jnj.com/scm/asx-jadf/d4u-argo.git
+    targetRevision: develop
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc
